@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+        function CartHeader (props){
+            return (
+                <div>
+                    <h1>{props.shoppingListName}</h1>
+                    <h2>Total Number of items : {props.numberOfItems}</h2>
+                </div>
+                );
+        }
+
+        function ShoppingListItem(props){
+            var listItems = props.items.map(function(item){
+                            return  <li>{item}</li>
+                        });
+            return (
+                <div>
+                    <h4>{props.listItemTitle}</h4>
+                    <ol>
+                        {listItems}
+                    </ol>
+                </div>
+            );
+        }
+
+        ReactDOM.render(
+            <div>
+                <CartHeader shoppingListName="Mahmoud Kida Cart"  numberOfItems = {9}/>
+                <ShoppingListItem listItemTitle="Food" items={['Apple','Apple','Apple']}/>
+                <ShoppingListItem listItemTitle="Clothes" items={['Apple','Apple','Apple']}/>
+                <ShoppingListItem listItemTitle="Supplies" items={['Apple','Apple','Apple']}/>
+            </div>
+        ,document.getElementById('root'))
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+let PostArray = [];
+
+class PostSubmit extends React.Component{
+    constructor(props){
+        super(props)
+        this.state = {PostHeader:""}
+        this.ChangePostHeader = this.ChangePostHeader.bind(this);
+        this.SubmitPost = this.SubmitPost.bind(this);
+    }
+    ChangePostHeader(event){
+        this.setState({PostHeader : event.target.value});
+    }
+    
+    SubmitPost(){
+        PostArray.push({
+            PostHeader : this.state.PostHeader,
+            UpVotes : 0
+        });
+    }
+
+    render(){
+        return (
+            <div>
+                <input type="text" onChange={this.ChangePostHeader}/>
+                <button onClick={this.SubmitPost}>Submit</button>
+            </div>
+            )
+    }
+}
+
+class PostsList extends React.Component{
+    
+    constructor(props){
+        super(props);
+        this.state = {};
+        let PostsList = PostArray.map(function(post,index){
+        return (
+            <div>
+                <button onClick={()=>this.DeletePost(index)}>X</button>
+                <span>post.PostHeader</span>
+                <button onClick={()=>this.UpVotePost(post)}>+</button>
+                <span>post.UpVotes</span>
+                <button  onClick={()=>this.DownVotePost(post)}>-</button>
+            </div>
+        )
+        });
+        this.DeletePost=this.DeletePost.bind(this);
+        this.UpVotePost=this.UpVotePost.bind(this);
+        this.DownVotePost=this.DownVotePost.bind(this);
+        
+    }
+    DeletePost(index){
+        PostArray.splice(index,1);
+    }
+    UpVotePost(post){
+        post.UpVotes++;
+    }
+    DownVotePost(post){
+        post.UpVotes--;
+    }
+
+    render(){
+        return (
+            <div>
+               {PostsList}
+            </div>
+            )
+    }
+}
+
+
+ReactDOM.render(
+    <div>
+        <PostSubmit />
+        <PostsList posts={PostArray} />
+    </div>,
+    document.getElementById("root")
+)
+
+    </script>
+
+</body>
+
+</html>
